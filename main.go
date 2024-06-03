@@ -33,7 +33,7 @@ func commandHelp() error {
 	fmt.Println("Usage:")
 	fmt.Println()
 	fmt.Printf("%s: %s\n", commands["help"].name, commands["help"].description)
-	fmt.Printf("%s: %s\n", commands["exit"].name, commands["help"].description)
+	fmt.Printf("%s: %s\n", commands["exit"].name, commands["exit"].description)
 	return nil
 }
 
