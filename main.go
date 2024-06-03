@@ -12,20 +12,28 @@ type cliCommand struct {
 	callback    func() error
 }
 
-var pokedexCommands = map[string]cliCommand{
-	"help": {
-		name:        "help",
-		description: "Displays a help message",
-		callback:    commandHelp,
-	},
-	"exit": {
-		name:        "exit",
-		description: "Exits the pokedex",
-		callback:    commandExit,
-	},
+func getPokedexCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
+	}
 }
 
 func commandHelp() error {
+	commands := getPokedexCommands()
+	fmt.Println("Welcome to the pokedex!")
+	fmt.Println("Usage:")
+	fmt.Println()
+	fmt.Printf("%s: %s\n", commands["help"].name, commands["help"].description)
+	fmt.Printf("%s: %s\n", commands["exit"].name, commands["help"].description)
 	return nil
 }
 
@@ -37,6 +45,7 @@ func commandExit() error {
 
 func main() {
 
+	pokedexCommands := getPokedexCommands()
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Printf("pokedex > ")
@@ -46,10 +55,11 @@ func main() {
 			os.Exit(1)
 		}
 		userInput := scanner.Text()
+
 		if command, exists := pokedexCommands[userInput]; exists {
 			command.callback()
 		} else {
-			fmt.Println("Invalid command. See Usage")
+			fmt.Println("Invalid command. Type 'help' for usage")
 		}
 
 	}
